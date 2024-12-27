@@ -1,16 +1,22 @@
-# This is a sample Python script.
+from flask import Flask
+from flask_cors import CORS
+from routes.ocr_services import ocr_services_blueprint
+from routes.document_analysis import document_analysis_blueprint
+from routes.document_summarization import document_summarization_blueprint
+from routes.language_translation import language_translation_blueprint
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+app = Flask(__name__)
+CORS(app)
+app.register_blueprint(ocr_services_blueprint)
+app.register_blueprint(document_analysis_blueprint)
+app.register_blueprint(document_summarization_blueprint)
+app.register_blueprint(language_translation_blueprint)
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+@app.route('/')
+def index():
+    return 'GraminIO Services portal'
 
 
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    app.run(host="0.0.0.0")
